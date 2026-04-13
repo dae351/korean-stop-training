@@ -1,4 +1,4 @@
-const trials = [
+// 예시 trial 목록
 });
 
 function loadTrial() {
