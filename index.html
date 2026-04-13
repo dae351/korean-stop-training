@@ -3,17 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>한국어 지각 실험</title>
+  <title>한국어 음성 지각 실험</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>한국어 어두 폐쇄음 지각 실험</h1>
-  <p>실험에 참여해 주셔서 감사합니다.</p>
-  <button onclick="startExperiment()">실험 시작</button>
+  <div class="container">
+    <h1>한국어 어두 폐쇄음 지각 실험</h1>
 
-  <script>
-    function startExperiment() {
-      alert("여기서 실험이 시작되도록 나중에 연결하면 됩니다.");
-    }
-  </script>
+    <div id="instructions">
+      <p>
+        들리는 소리를 듣고 어떤 소리인지 선택하세요.<br>
+        소리는 한 번만 재생되며, 아래 버튼 중 하나를 눌러 응답하세요.
+      </p>
+      <button id="startButton">실험 시작</button>
+    </div>
+
+    <div id="experiment" class="hidden">
+      <p id="trialNumber"></p>
+
+      <button id="playButton">소리 재생</button>
+
+      <div class="responseButtons">
+        <button class="response" data-response="lenis">평음</button>
+        <button class="response" data-response="aspirated">격음</button>
+      </div>
+    </div>
+
+    <div id="finished" class="hidden">
+      <h2>실험이 끝났습니다.</h2>
+      <p>참여해 주셔서 감사합니다.</p>
+      <button id="downloadButton">응답 다운로드</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
