@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한국어 지각 실험</title>
+  <style>
+    :root {
+      --bg: #f7f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --sub: #6b7280;
+      --line: #d1d5db;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --disabled: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      background: var(--accent);
+      color: white;
+      transition: 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: var(--accent-hover);
+    }
+
+    button:disabled {
+      background: var(--disabled);
+      cursor: not-allowed;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .choice-btn {
+      padding: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 16px;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .question-block {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--sub);
+    }
+
+    .center {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 1. 안내 페이지 -->
+    <section id="welcome-screen" class="card">
+      <h1>한국어 음성 지각 실험</h1>
+      <p>안녕하세요. 본 실험은 한국어 음성 지각 방식을 살펴보기 위한 연구입니다.</p>
+      <p>실험은 다음 순서로 진행됩니다.</p>
+      <ol>
+        <li>연구 설명 및 동의</li>
+        <li>참가자 정보 입력</li>
+        <li>한국어 학습 배경 입력</li>
+        <li>연습</li>
+        <li>Pre-test</li>
+        <li>Training</li>
+        <li>Post-test</li>
+        <li>사후 설문</li>
+      </ol>
+      <p class="small">조용한 환경에서 이어폰 또는 헤드폰을 착용하고 참여해 주세요.</p>
+      <div class="button-row">
+        <button id="go-consent-btn">다음</button>
+      </div>
+    </section>
+
+    <!-- 2. 동의서 -->
+    <section id="consent-screen" class="card hidden">
+      <h2>연구 참여 동의</h2>
+      <p>본 실험은 익명으로 진행되며, 응답은 연구 목적으로만 사용됩니다.</p>
+      <p>원하지 않으시면 언제든 중단할 수 있습니다.</p>
+      <label>
+        <input type="checkbox" id="consent-check" />
+        위 내용을 읽었으며 연구 참여에 동의합니다.
+      </label>
+      <div class="button-row">
+        <button id="back-to-welcome-btn">이전</button>
+        <button id="go-info-btn" disabled>다음</button>
+      </div>
+    </section>
+
+    <!-- 3. 참가자 정보 -->
+    <section id="info-screen" class="card hidden">
+      <h2>참가자 정보</h2>
+      <p class="small">참가자 번호는 연구자가 자동으로 부여합니다.</p>
+      <div class="question-block">
+        <label>나이
+          <input type="number" id="participant-age" min="0" />
+        </label>
+      </div>
+      <div class="question-block">
+        <label>생물학적 성별
+          <select id="participant-gender">
+            <option value="">선택하세요</option>
+            <option value="female">여성</option>
+            <option value="male">남성</option>
+          </select>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>출신 국가
+          <input type="text" id="participant-country" placeholder="예: 미국, 영국, 캐나다" />
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="back-to-consent-btn">이전</button>
+        <button id="go-language-bg-btn">다음</button>
+      </div>
+    </section>
+
+    <!-- 3-2. 한국어 학습 배경 -->
+    <section id="language-bg-screen" class="card hidden">
+      <h2>한국어 학습 배경</h2>
+      <div class="question-block">
+        <label>한국어 학습 수준
+          <select id="participant-level">
+            <option value="">선택하세요</option>
+            <option value="beginner">초급</option>
+            <option value="intermediate">중급</option>
+            <option value="advanced">고급</option>
+          </select>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>한국어 학습 기간
+          <div style="display:flex; gap:12px;">
+            <input type="number" id="learning-years" min="0" placeholder="년" />
+            <input type="number" id="learning-months" min="0" max="11" placeholder="개월" />
+          </div>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>한국 거주 기간
+          <div style="display:flex; gap:12px;">
+            <input type="number" id="residence-years" min="0" placeholder="년" />
+            <input type="number" id="residence-months" min="0" max="11" placeholder="개월" />
+          </div>
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="back-to-info-btn">이전</button>
+        <button id="go-practice-btn">연습으로 이동</button>
+      </div>
+    </section>
+
+    <!-- 4. 연습 안내 -->
+    <section id="practice-intro-screen" class="card hidden">
+      <h2>연습</h2>
+      <p>먼저 연습 문항을 진행합니다.</p>
+      <p>소리를 들은 뒤, 들린 것에 더 가깝다고 생각하는 항목을 선택해 주세요.</p>
+      <p>너무 오래 고민하지 말고, 가장 먼저 들린 느낌에 따라 직관적으로 선택해 주세요.</p>
+      <div class="button-row">
+        <button id="start-practice-btn">연습 시작</button>
+      </div>
+    </section>
+
+    <!-- 5. 자극 제시 화면 -->
+    <section id="trial-screen" class="card hidden">
+      <h2 id="trial-phase-title">연습</h2>
+      <div class="progress-wrap">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <p id="trial-counter">1 / 1</p>
+      <p>아래 버튼을 눌러 소리를 재생한 뒤, 가장 가깝다고 생각하는 항목을 선택하세요.</p>
+      <div class="button-row">
+        <button id="play-audio-btn">소리 재생</button>
+      </div>
+      <div class="choice-grid">
+        <button class="choice-btn" id="choice-left-btn" disabled>가</button>
+        <button class="choice-btn" id="choice-right-btn" disabled>카</button>
+      </div>
+      <p class="status" id="trial-status">소리를 먼저 들어 주세요.</p>
+    </section>
+
+    <!-- 6. 본 실험 안내 -->
+    <section id="pretest-intro-screen" class="card hidden">
+      <h2>Pre-test</h2>
+      <p>이제 pre-test를 시작합니다.</p>
+      <p>소리를 들은 뒤, 가장 가깝다고 생각하는 항목을 직관적으로 선택해 주세요.</p>
+      <div class="button-row">
+        <button id="start-pretest-btn">Pre-test 시작</button>
+      </div>
+    </section>
+
+    <section id="training-intro-screen" class="card hidden">
+      <h2>Training</h2>
+      <p>이제 training을 시작합니다.</p>
+      <p>소리를 들은 뒤, 가장 가깝다고 생각하는 항목을 직관적으로 선택해 주세요.</p>
+      <div class="button-row">
+        <button id="start-training-btn">Training 시작</button>
+      </div>
+    </section>
+
+    <section id="posttest-intro-screen" class="card hidden">
+      <h2>Post-test</h2>
+      <p>이제 post-test를 시작합니다.</p>
+      <p>소리를 들은 뒤, 가장 가깝다고 생각하는 항목을 직관적으로 선택해 주세요.</p>
+      <div class="button-row">
+        <button id="start-posttest-btn">Post-test 시작</button>
+      </div>
+    </section>
+
+    <!-- 7. 사후 설문 -->
+    <section id="survey-screen" class="card hidden">
+      <h2>사후 설문</h2>
+      <div class="question-block">
+        <label>실험 중 어떤 단서를 가장 많이 참고했다고 느끼셨나요?
+          <textarea id="survey-cue" placeholder="예: 발음 길이, 높낮이, 직감적으로 선택함 등"></textarea>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>실험 중 특별히 어렵거나 헷갈린 점이 있었나요?
+          <textarea id="survey-difficulty"></textarea>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>기타 의견
+          <textarea id="survey-comment"></textarea>
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="submit-btn">제출</button>
+      </div>
+    </section>
+
+    <!-- 8. 종료 화면 -->
+    <section id="end-screen" class="card hidden center">
+      <h2>참여해 주셔서 감사합니다.</h2>
+      <p>응답이 저장되었습니다.</p>
+      <p class="small">현재 예시 버전에서는 결과가 브라우저 콘솔과 화면 내부 데이터에만 저장됩니다.</p>
+      <div class="button-row" style="justify-content:center;">
+        <button id="download-json-btn">응답 JSON 다운로드</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // =========================
+    // 1. 실험 자극 예시 데이터
+    // =========================
+    // audio: 나중에 실제 wav/mp3 경로로 교체
+    const practiceTrials = [
+      {
+        id: 'practice_01',
+        audio: 'audio/practice_01.wav',
+        leftLabel: '가',
+        rightLabel: '카',
+        correctAnswer: null
+      }
+    ];
+
+    const pretestTrials = [];
+    const trainingTrials = [];
+    const posttestTrials = [];
+
+    const votSteps = [1, 2, 3, 4, 5];
+    const f0Steps = [1, 2, 3, 4, 5, 6];
+
+    const pretestSyllables = [
+      { consonant: 'p', syllable: 'pa', leftLabel: '바', rightLabel: '파' },
+      { consonant: 't', syllable: 'ta', leftLabel: '다', rightLabel: '타' },
+      { consonant: 'k', syllable: 'ka', leftLabel: '가', rightLabel: '카' }
+    ];
+
+    const trainingSyllables = [
+      { consonant: 'p', syllable: 'pu', leftLabel: '부', rightLabel: '푸' },
+      { consonant: 't', syllable: 'tu', leftLabel: '두', rightLabel: '투' },
+      { consonant: 'k', syllable: 'ku', leftLabel: '구', rightLabel: '쿠' },
+      { consonant: 'p', syllable: 'pʌ', leftLabel: '버', rightLabel: '퍼' },
+      { consonant: 't', syllable: 'tʌ', leftLabel: '더', rightLabel: '터' },
+      { consonant: 'k', syllable: 'kʌ', leftLabel: '거', rightLabel: '커' }
+    ];
+
+    const posttestSyllables = [
+      { consonant: 'p', syllable: 'pa', leftLabel: '바', rightLabel: '파' },
+      { consonant: 't', syllable: 'ta', leftLabel: '다', rightLabel: '타' },
+      { consonant: 'k', syllable: 'ka', leftLabel: '가', rightLabel: '카' }
+    ];
+
+    function buildTrials(targetArray, speaker, syllableSet, phaseName) {
+      syllableSet.forEach(item => {
+        votSteps.forEach(vot => {
+          f0Steps.forEach(f0 => {
+            targetArray.push({
+              id: `${phaseName}_${speaker}_${item.syllable}_v${vot}_f${f0}`,
+              audio: `audio/${phaseName}/${speaker}_${item.syllable}_v${vot}_f${f0}.wav`,
+              leftLabel: item.leftLabel,
+              rightLabel: item.rightLabel,
+              speaker,
+              syllable: item.syllable,
+              condition: {
+                phase: phaseName,
+                consonant: item.consonant,
+                votStep: vot,
+                f0Step: f0
+              }
+            });
+          });
+        });
+      });
+    }
+
+    function shuffle(array) {
+      const arr = [...array];
+
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+
+      return arr;
+    }
+
+    buildTrials(pretestTrials, 'A', pretestSyllables, 'pretest');
+    buildTrials(trainingTrials, 'B', trainingSyllables, 'training');
+    buildTrials(posttestTrials, 'C', posttestSyllables, 'posttest');
+
+    // =========================
+    // 2. 전역 상태
+    // =========================
+    const experimentData = {
+      participantInfo: {},
+      practiceResponses: [],
+      pretestResponses: [],
+      trainingResponses: [],
+      posttestResponses: [],
+      survey: {},
+      startedAt: null,
+      endedAt: null
+    };
+
+    let currentPhase = null; // 'practice' | 'pretest' | 'training' | 'posttest'
+    let currentTrials = [];
+    let currentTrialIndex = 0;
+    let audioPlayed = false;
+    let currentAudio = null;
+
+    // =========================
+    // 3. 화면 요소
+    // =========================
+    const screens = {
+      welcome: document.getElementById('welcome-screen'),
+      consent: document.getElementById('consent-screen'),
+      info: document.getElementById('info-screen'),
+      languageBg: document.getElementById('language-bg-screen'),
+      practiceIntro: document.getElementById('practice-intro-screen'),
+      trial: document.getElementById('trial-screen'),
+      pretestIntro: document.getElementById('pretest-intro-screen'),
+      trainingIntro: document.getElementById('training-intro-screen'),
+      posttestIntro: document.getElementById('posttest-intro-screen'),
+      survey: document.getElementById('survey-screen'),
+      end: document.getElementById('end-screen')
+    };
+
+    const consentCheck = document.getElementById('consent-check');
+    const goInfoBtn = document.getElementById('go-info-btn');
+
+    const participantAgeInput = document.getElementById('participant-age');
+    const participantGenderInput = document.getElementById('participant-gender');
+    const participantLevelInput = document.getElementById('participant-level');
+    const participantCountryInput = document.getElementById('participant-country');
+    const learningYearsInput = document.getElementById('learning-years');
+    const learningMonthsInput = document.getElementById('learning-months');
+    const residenceYearsInput = document.getElementById('residence-years');
+    const residenceMonthsInput = document.getElementById('residence-months');
+
+    const trialPhaseTitle = document.getElementById('trial-phase-title');
+    const trialCounter = document.getElementById('trial-counter');
+    const progressBar = document.getElementById('progress-bar');
+    const playAudioBtn = document.getElementById('play-audio-btn');
+    const choiceLeftBtn = document.getElementById('choice-left-btn');
+    const choiceRightBtn = document.getElementById('choice-right-btn');
+    const trialStatus = document.getElementById('trial-status');
+
+    const surveyCue = document.getElementById('survey-cue');
+    const surveyDifficulty = document.getElementById('survey-difficulty');
+    const surveyComment = document.getElementById('survey-comment');
+
+    // =========================
+    // 4. 유틸 함수
+    // =========================
+    function showScreen(targetScreen) {
+      Object.values(screens).forEach(screen => screen.classList.add('hidden'));
+      targetScreen.classList.remove('hidden');
+    }
+
+    function saveParticipantInfo() {
+      experimentData.participantInfo = {
+        participantId: (() => {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, '0');
+          const day = String(now.getDate()).padStart(2, '0');
+          const random = Math.floor(Math.random() * 1000)
+            .toString()
+            .padStart(3, '0');
+
+          return `P${year}${month}${day}_${random}`;
+        })(),
+        age: participantAgeInput.value.trim(),
+        gender: participantGenderInput.value,
+        country: participantCountryInput.value.trim(),
+        level: participantLevelInput.value,
+        learningPeriod: {
+          years: learningYearsInput.value.trim(),
+          months: learningMonthsInput.value.trim()
+        },
+        residencePeriod: {
+          years: residenceYearsInput.value.trim(),
+          months: residenceMonthsInput.value.trim()
+        }
+      };
+    }
+
+    function startPhase(phase) {
+      currentPhase = phase;
+
+      if (phase === 'practice') {
+        currentTrials = practiceTrials;
+      } else if (phase === 'pretest') {
+        currentTrials = pretestTrials;
+      } else if (phase === 'training') {
+        currentTrials = trainingTrials;
+      } else if (phase === 'posttest') {
+        currentTrials = posttestTrials;
+      } else {
+        currentTrials = [];
+      }
+
+      currentTrials = shuffle(currentTrials);
+      currentTrialIndex = 0;
+      if (!experimentData.startedAt) {
+        experimentData.startedAt = new Date().toISOString();
+      }
+      loadTrial();
+      showScreen(screens.trial);
+    }
+      loadTrial();
+      showScreen(screens.trial);
+    }
+
+    function loadTrial() {
+      audioPlayed = false;
+      choiceLeftBtn.disabled = true;
+      choiceRightBtn.disabled = true;
+      trialStatus.textContent = '소리를 먼저 들어 주세요.';
+
+      const trial = currentTrials[currentTrialIndex];
+      if (currentPhase === 'practice') {
+        trialPhaseTitle.textContent = '연습';
+      } else if (currentPhase === 'pretest') {
+        trialPhaseTitle.textContent = 'Pre-test';
+      } else if (currentPhase === 'training') {
+        trialPhaseTitle.textContent = 'Training';
+      } else if (currentPhase === 'posttest') {
+        trialPhaseTitle.textContent = 'Post-test';
+      }
+      trialCounter.textContent = `${currentTrialIndex + 1} / ${currentTrials.length}`;
+      progressBar.style.width = `${((currentTrialIndex) / currentTrials.length) * 100}%`;
+
+      choiceLeftBtn.textContent = trial.leftLabel;
+      choiceRightBtn.textContent = trial.rightLabel;
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      currentAudio = new Audio(trial.audio);
+    }
+
+    function playCurrentAudio() {
+      if (!currentAudio) return;
+
+      currentAudio.currentTime = 0;
+      currentAudio.play()
+        .then(() => {
+          audioPlayed = true;
+          choiceLeftBtn.disabled = false;
+          choiceRightBtn.disabled = false;
+          trialStatus.textContent = '응답을 선택해 주세요.';
+        })
+        .catch(error => {
+          console.error('오디오 재생 오류:', error);
+          trialStatus.textContent = '오디오를 재생할 수 없습니다. 파일 경로를 확인해 주세요.';
+        });
+    }
+
+    function recordResponse(choice) {
+      if (!audioPlayed) return;
+
+      const trial = currentTrials[currentTrialIndex];
+      const response = {
+        trialId: trial.id,
+        phase: currentPhase,
+        audio: trial.audio,
+        leftLabel: trial.leftLabel,
+        rightLabel: trial.rightLabel,
+        choice,
+        timestamp: new Date().toISOString(),
+        condition: trial.condition || null
+      };
+
+      if (currentPhase === 'practice') {
+        experimentData.practiceResponses.push(response);
+      } else if (currentPhase === 'pretest') {
+        experimentData.pretestResponses.push(response);
+      } else if (currentPhase === 'training') {
+        experimentData.trainingResponses.push(response);
+      } else if (currentPhase === 'posttest') {
+        experimentData.posttestResponses.push(response);
+      }
+
+      currentTrialIndex += 1;
+
+      if (currentTrialIndex < currentTrials.length) {
+        loadTrial();
+      } else {
+        progressBar.style.width = '100%';
+        if (currentPhase === 'practice') {
+          showScreen(screens.pretestIntro);
+        } else if (currentPhase === 'pretest') {
+          showScreen(screens.trainingIntro);
+        } else if (currentPhase === 'training') {
+          showScreen(screens.posttestIntro);
+        } else {
+          showScreen(screens.survey);
+        }
+      }
+    }
+
+    function submitSurvey() {
+      experimentData.survey = {
+        attendedCue: surveyCue.value.trim(),
+        difficulty: surveyDifficulty.value.trim(),
+        comment: surveyComment.value.trim()
+      };
+      experimentData.endedAt = new Date().toISOString();
+
+      console.log('실험 데이터:', experimentData);
+      showScreen(screens.end);
+    }
+
+    function downloadJSON() {
+      const blob = new Blob([
+        JSON.stringify(experimentData, null, 2)
+      ], { type: 'application/json' });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${experimentData.participantInfo.participantId || 'participant'}_responses.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // =========================
+    // 5. 버튼 이벤트
+    // =========================
+    document.getElementById('go-consent-btn').addEventListener('click', () => {
+      showScreen(screens.consent);
+    });
+
+    document.getElementById('back-to-welcome-btn').addEventListener('click', () => {
+      showScreen(screens.welcome);
+    });
+
+    consentCheck.addEventListener('change', () => {
+      goInfoBtn.disabled = !consentCheck.checked;
+    });
+
+    goInfoBtn.addEventListener('click', () => {
+      showScreen(screens.info);
+    });
+
+    document.getElementById('back-to-consent-btn').addEventListener('click', () => {
+      showScreen(screens.consent);
+    });
+
+    document.getElementById('go-language-bg-btn').addEventListener('click', () => {
+      showScreen(screens.languageBg);
+    });
+
+    document.getElementById('back-to-info-btn').addEventListener('click', () => {
+      showScreen(screens.info);
+    });
+
+    document.getElementById('go-practice-btn').addEventListener('click', () => {
+      saveParticipantInfo();
+      showScreen(screens.practiceIntro);
+    });
+
+    document.getElementById('start-practice-btn').addEventListener('click', () => {
+      startPhase('practice');
+    });
+
+    playAudioBtn.addEventListener('click', playCurrentAudio);
+    choiceLeftBtn.addEventListener('click', () => recordResponse('left'));
+    choiceRightBtn.addEventListener('click', () => recordResponse('right'));
+
+    document.getElementById('start-pretest-btn').addEventListener('click', () => {
+      startPhase('pretest');
+    });
+
+    document.getElementById('start-training-btn').addEventListener('click', () => {
+      startPhase('training');
+    });
+
+    document.getElementById('start-posttest-btn').addEventListener('click', () => {
+      startPhase('posttest');
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', submitSurvey);
+    document.getElementById('download-json-btn').addEventListener('click', downloadJSON);
+  </script>
+</body>
+</html>
