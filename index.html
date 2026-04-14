@@ -158,6 +158,7 @@
     <section id="welcome-screen" class="card">
       <h1>한국어 음성 지각 실험</h1>
       <p>안녕하세요. 본 실험은 한국어 음성 지각 방식을 살펴보기 위한 연구입니다.</p>
+      <p>실험에는 대략 15~20분이 소요됩니다.</p>
       <p>실험은 다음 순서로 진행됩니다.</p>
       <ol>
         <li>연구 설명 및 동의</li>
@@ -175,7 +176,7 @@
     <!-- 2. 동의서 -->
     <section id="consent-screen" class="card hidden">
       <h2>연구 참여 동의</h2>
-      <p>본 실험은 익명으로 진행되며, 응답은 연구 목적으로만 사용됩니다.</p>
+      <p>본 실험은 익명으로 진행되며 응답은 연구 목적으로만 사용됩니다.</p>
       <p>원하지 않으시면 언제든 중단할 수 있습니다.</p>
       <label>
         <input type="checkbox" id="consent-check" />
@@ -191,33 +192,22 @@
     <section id="info-screen" class="card hidden">
       <h2>참가자 정보</h2>
       <div class="question-block">
-        <label>참가자 번호
-          <input type="text" id="participant-id" placeholder="예: P001" />
-        </label>
-      </div>
-      <div class="question-block">
         <label>나이
           <input type="number" id="participant-age" min="0" />
         </label>
       </div>
       <div class="question-block">
-        <label>성별
+        <label>생물학적 성별
           <select id="participant-gender">
             <option value="">선택하세요</option>
             <option value="female">여성</option>
             <option value="male">남성</option>
-            <option value="other">기타 / 응답 원하지 않음</option>
           </select>
         </label>
       </div>
       <div class="question-block">
-        <label>한국어 학습 수준
-          <select id="participant-level">
-            <option value="">선택하세요</option>
-            <option value="beginner">초급</option>
-            <option value="intermediate">중급</option>
-            <option value="advanced">고급</option>
-          </select>
+        <label>출신 국가
+          <input type="text" id="participant-country" placeholder="예: 미국, 영국, 캐나다" />
         </label>
       </div>
       <div class="button-row">
@@ -226,11 +216,45 @@
       </div>
     </section>
 
+    <!-- 3-2. 한국어 학습 배경 -->
+    <section id="language-bg-screen" class="card hidden">
+      <h2>한국어 학습 배경</h2>
+      <div class="question-block">
+        <label>한국어 학습 수준 (스스로 생각하는 한국어 학습 수준을 입력해주세요.)
+          <select id="participant-level">
+            <option value="">선택하세요</option>
+            <option value="beginner">초급</option>
+            <option value="intermediate">중급</option>
+            <option value="advanced">고급</option>
+          </select>
+        </label>
+      </div>
+      <div class="question-block">
+        <label>한국어 학습 기간
+          <div style="display:flex; gap:12px;">
+            <input type="number" id="learning-years" min="0" placeholder="년" />
+            <input type="number" id="learning-months" min="0" placeholder="달" />
+          </div>
+        </label>
+      </div>
+          <div style="display:flex; gap:12px;">
+            <input type="number" id="residence-years" min="0" placeholder="년" />
+            <input type="number" id="residence-days" min="0" placeholder="일" />
+          </div>
+        </label>
+      </div>
+      <div class="button-row">
+        <button id="back-to-info-btn">이전</button>
+        <button id="go-practice-btn">연습으로 이동</button>
+      </div>
+    </section>
+      
     <!-- 4. 연습 안내 -->
     <section id="practice-intro-screen" class="card hidden">
       <h2>연습</h2>
       <p>먼저 연습 문항을 진행합니다.</p>
-      <p>소리를 들은 뒤, 들린 것에 더 가깝다고 생각하는 항목을 선택해 주세요.</p>
+      <p>소리를 들은 뒤 들린 것에 더 가깝다고 생각하는 항목을 선택해 주세요.</p>
+      <p>오래 고민하지 말고 가장 먼저 들린 느낌에 따라 직관적으로 선택해 주세요.
       <div class="button-row">
         <button id="start-practice-btn">연습 시작</button>
       </div>
