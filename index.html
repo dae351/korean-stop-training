@@ -393,6 +393,7 @@
       welcome: document.getElementById('welcome-screen'),
       consent: document.getElementById('consent-screen'),
       info: document.getElementById('info-screen'),
+      languageBg: document.getElementById('language-bg-screen'),
       practiceIntro: document.getElementById('practice-intro-screen'),
       trial: document.getElementById('trial-screen'),
       mainIntro: document.getElementById('main-intro-screen'),
@@ -403,10 +404,14 @@
     const consentCheck = document.getElementById('consent-check');
     const goInfoBtn = document.getElementById('go-info-btn');
 
-    const participantIdInput = document.getElementById('participant-id');
     const participantAgeInput = document.getElementById('participant-age');
     const participantGenderInput = document.getElementById('participant-gender');
     const participantLevelInput = document.getElementById('participant-level');
+    const participantCountryInput = document.getElementById('participant-country');
+    const learningYearsInput = document.getElementById('learning-years');
+    const learningDaysInput = document.getElementById('learning-days');
+    const residenceYearsInput = document.getElementById('residence-years');
+    const residenceDaysInput = document.getElementById('residence-days');
 
     const trialPhaseTitle = document.getElementById('trial-phase-title');
     const trialCounter = document.getElementById('trial-counter');
@@ -421,104 +426,6 @@
     const surveyComment = document.getElementById('survey-comment');
 
     // =========================
-    // 4. 유틸 함수
-    // =========================
-    function showScreen(targetScreen) {
-      Object.values(screens).forEach(screen => screen.classList.add('hidden'));
-      targetScreen.classList.remove('hidden');
-    }
-
-    function saveParticipantInfo() {
-      experimentData.participantInfo = {
-        participantId: participantIdInput.value.trim(),
-        age: participantAgeInput.value.trim(),
-        gender: participantGenderInput.value,
-        level: participantLevelInput.value
-      };
-    }
-
-    function startPhase(phase) {
-      currentPhase = phase;
-      currentTrials = phase === 'practice' ? practiceTrials : mainTrials;
-      currentTrialIndex = 0;
-      if (!experimentData.startedAt) {
-        experimentData.startedAt = new Date().toISOString();
-      }
-      loadTrial();
-      showScreen(screens.trial);
-    }
-
-    function loadTrial() {
-      audioPlayed = false;
-      choiceLeftBtn.disabled = true;
-      choiceRightBtn.disabled = true;
-      trialStatus.textContent = '소리를 먼저 들어 주세요.';
-
-      const trial = currentTrials[currentTrialIndex];
-      trialPhaseTitle.textContent = currentPhase === 'practice' ? '연습' : '본 실험';
-      trialCounter.textContent = `${currentTrialIndex + 1} / ${currentTrials.length}`;
-      progressBar.style.width = `${((currentTrialIndex) / currentTrials.length) * 100}%`;
-
-      choiceLeftBtn.textContent = trial.leftLabel;
-      choiceRightBtn.textContent = trial.rightLabel;
-
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-      currentAudio = new Audio(trial.audio);
-    }
-
-    function playCurrentAudio() {
-      if (!currentAudio) return;
-
-      currentAudio.currentTime = 0;
-      currentAudio.play()
-        .then(() => {
-          audioPlayed = true;
-          choiceLeftBtn.disabled = false;
-          choiceRightBtn.disabled = false;
-          trialStatus.textContent = '응답을 선택해 주세요.';
-        })
-        .catch(error => {
-          console.error('오디오 재생 오류:', error);
-          trialStatus.textContent = '오디오를 재생할 수 없습니다. 파일 경로를 확인해 주세요.';
-        });
-    }
-
-    function recordResponse(choice) {
-      if (!audioPlayed) return;
-
-      const trial = currentTrials[currentTrialIndex];
-      const response = {
-        trialId: trial.id,
-        phase: currentPhase,
-        audio: trial.audio,
-        leftLabel: trial.leftLabel,
-        rightLabel: trial.rightLabel,
-        choice,
-        timestamp: new Date().toISOString(),
-        condition: trial.condition || null
-      };
-
-      if (currentPhase === 'practice') {
-        experimentData.practiceResponses.push(response);
-      } else {
-        experimentData.mainResponses.push(response);
-      }
-
-      currentTrialIndex += 1;
-
-      if (currentTrialIndex < currentTrials.length) {
-        loadTrial();
-      } else {
-        progressBar.style.width = '100%';
-        if (currentPhase === 'practice') {
-          showScreen(screens.mainIntro);
-        } else {
-          showScreen(screens.survey);
-        }
-      }
     }
 
     function submitSurvey() {
@@ -571,6 +478,14 @@
       showScreen(screens.consent);
     });
 
+    document.getElementById('go-language-bg-btn').addEventListener('click', () => {
+      showScreen(screens.languageBg);
+    });
+
+    document.getElementById('back-to-info-btn').addEventListener('click', () => {
+      showScreen(screens.info);
+    });
+
     document.getElementById('go-practice-btn').addEventListener('click', () => {
       saveParticipantInfo();
       showScreen(screens.practiceIntro);
@@ -593,3 +508,11 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+    
