@@ -841,28 +841,30 @@
     nextTrialBtn.addEventListener('click', handleNextTrialButton);
     document.getElementById('submit-btn').addEventListener('click', submitSurvey);
     document.getElementById('download-json-btn').addEventListener('click', downloadJSON);
+
+    // 🔥 관리자용 페이지 바로 이동 (URL 파라미터)
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page");
+
+    if (page) {
+      const pageMap = {
+        welcome: screens.welcome,
+        consent: screens.consent,
+        info: screens.info,
+        language: screens.languageBg,
+        practice: screens.practiceIntro,
+        pretest: screens.pretestIntro,
+        training: screens.trainingIntro,
+        posttest: screens.posttestIntro,
+        survey: screens.survey
+      };
+
+      if (pageMap[page]) {
+        showScreen(pageMap[page]);
+      }
+    }
+
   </script>
 </body>
 </html>
 
-// 🔥 관리자용 페이지 바로 이동 (URL 파라미터)
-const params = new URLSearchParams(window.location.search);
-const page = params.get("page");
-
-if (page) {
-  const pageMap = {
-    welcome: screens.welcome,
-    consent: screens.consent,
-    info: screens.info,
-    language: screens.languageBg,
-    practice: screens.practiceIntro,
-    pretest: screens.pretestIntro,
-    training: screens.trainingIntro,
-    posttest: screens.posttestIntro,
-    survey: screens.survey
-  };
-
-  if (pageMap[page]) {
-    showScreen(pageMap[page]);
-  }
-}
