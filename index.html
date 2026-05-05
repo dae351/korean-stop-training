@@ -244,100 +244,100 @@
 
     <section id="practice-intro-screen" class="card hidden">
       <h2>Practice</h2>
-      <p>먼저 연습 문항을 진행합니다.</p>
-      <p>소리를 들은 뒤, 들린 것에 더 가깝다고 생각하는 항목을 선택해 주세요.</p>
-      <p>너무 오래 고민하지 말고, 가장 먼저 들린 느낌에 따라 직관적으로 선택해 주세요.</p>
+      <p>You will first complete practice trials.</p>
+      <p>After listening to the sound, select the option that you think is closest.</p>
+      <p>Please respond intuitively without overthinking.</p>
       <div class="button-row">
-        <button id="start-practice-btn" type="button">연습 시작</button>
+        <button id="start-practice-btn" type="button">Start Practice</button>
       </div>
     </section>
 
     <section id="trial-screen" class="card hidden">
-      <h2 id="trial-phase-title">연습</h2>
+      <h2 id="trial-phase-title">Practice</h2>
       <div class="progress-wrap">
         <div id="progress-bar" class="progress-bar"></div>
       </div>
       <p id="trial-counter">1 / 1</p>
-      <p>아래 버튼을 눌러 소리를 재생한 뒤, 가장 가깝다고 생각하는 항목을 선택하세요.</p>
-      <p class="small">지금 들린 소리에 대해, 직관적으로 가장 가깝다고 느껴지는 항목을 선택하세요.</p>
+      <p>Press the button below to play the sound, then select the closest option.</p>
+      <p class="small">Please choose the option that feels most similar to what you heard.</p>
       <p style="font-size: 28px; font-weight: bold; text-align: center; margin-top: 20px;">
-        지금 버튼을 눌러 응답하세요 (Please select the option now)
+        지금 ○를 누르세요 (Please select the option now)
       </p>
       <div class="button-row">
-        <button id="play-audio-btn" type="button">소리 재생</button>
+        <button id="play-audio-btn" type="button">Play Sound</button>
       </div>
       <div class="choice-grid">
         <button class="choice-btn" id="choice-left-btn" type="button" disabled>가</button>
         <button class="choice-btn" id="choice-right-btn" type="button" disabled>카</button>
       </div>
       <div class="button-row">
-        <button id="next-trial-btn" type="button" class="hidden" disabled>다음</button>
+        <button id="next-trial-btn" type="button" class="hidden" disabled>Next</button>
       </div>
-      <p class="status" id="trial-status">소리를 먼저 들어 주세요.</p>
+      <p class="status" id="trial-status">Please Listen to the Sound First.</p>
     </section>
 
     <section id="pretest-intro-screen" class="card hidden">
       <h2>Pre-test</h2>
-      <p>이제 pre-test를 시작합니다.</p>
-      <p>소리를 들은 뒤, 가장 가깝다고 생각하는 항목을 직관적으로 선택해 주세요.</p>
+      <p>The pre-test will now begin.</p>
+      <p>Please respond intuitively without overthinking.</p>
       <div class="button-row">
-        <button id="start-pretest-btn" type="button">Pre-test 시작</button>
+        <button id="start-pretest-btn" type="button">Start Pre-test</button>
       </div>
     </section>
 
     <section id="training-intro-screen" class="card hidden">
       <h2>Training</h2>
-      <p>이제 training을 시작합니다.</p>
-      <p>Training에서는 선택 후 다음 버튼을 누르면 정답 피드백이 제공됩니다.</p>
+      <p>The training session will now begin.</p>
+      <p>You will receive feedback after each response.</p>
       <div class="button-row">
-        <button id="start-training-btn" type="button">Training 시작</button>
+        <button id="start-training-btn" type="button">Start Training</button>
       </div>
     </section>
 
     <section id="posttest-intro-screen" class="card hidden">
       <h2>Post-test</h2>
-      <p>이제 post-test를 시작합니다.</p>
-      <p>소리를 들은 뒤, 가장 가깝다고 생각하는 항목을 직관적으로 선택해 주세요.</p>
+      <p>The post-test will now begin.</p>
+      <p>Please respond intuitively without overthinking.</p>
       <div class="button-row">
-        <button id="start-posttest-btn" type="button">Post-test 시작</button>
+        <button id="start-posttest-btn" type="button">Start Post-test</button>
       </div>
     </section>
 
     <section id="survey-screen" class="card hidden">
-      <h2>사후 설문 (Post-experiment Survey)</h2>
+      <h2>Post-experiment Survey</h2>
       <div class="question-block">
-        <label>실험 중 어떤 단서를 가장 많이 참고했다고 느끼셨나요? (Which cues did you rely on the most during the experiment?)
-          <textarea id="survey-cue" placeholder="예: 발음 길이, 높낮이, 직감적으로 선택함 등"></textarea>
+        <label>Which cues did you rely on the most during the experiment?
+          <textarea id="survey-cue" placeholder="e.g., duration, pitch, intuition"></textarea>
         </label>
       </div>
       <div class="question-block">
-        <label>실험 중 특별히 어렵거나 헷갈린 점이 있었나요? (Did you find anything particularly difficult or confusing during the experiment?)
+        <label>Did you find anything particularly difficult or confusing during the experiment?)
           <textarea id="survey-difficulty"></textarea>
         </label>
       </div>
       <div class="question-block">
-        <label>기타 의견 (Additional comments)
+        <label>Additional comments
           <textarea id="survey-comment"></textarea>
         </label>
       </div>
 
       <div class="question-block">
-        <label>사례 지급을 위한 전화번호 (Phone number for compensation)
+        <label>Phone number for compensation
           <input type="text" id="survey-phone" placeholder="예: 010-1234-5678" />
         </label>
-        <p class="small">입력하신 전화번호는 사례 지급을 위해서만 사용되며, 지급 완료 후 즉시 폐기됩니다. (Your phone number will be used only for compensation and will be deleted immediately after payment.)</p>
+        <p class="small">Your phone number will be used only for compensation and will be deleted immediately after payment.</p>
       </div>
       <div class="button-row">
-        <button id="submit-btn" type="button">제출</button>
+        <button id="submit-btn" type="button">submit</button>
       </div>
     </section>
 
     <section id="end-screen" class="card hidden center">
-      <h2>참여해 주셔서 감사합니다.</h2>
-      <p>응답이 저장되었습니다.</p>
-      <p class="small">저장에 문제가 있었을 경우 아래 버튼으로 JSON 파일을 다운로드해 연구자에게 제출해 주세요.</p>
+      <h2>Thank you for participating.</h2>
+      <p>Your responses have been saved.</p>
+      <p class="small">If there was an issue with saving, please download the JSON file below and send it to the following email address: andh0322@snu.ac.kr</p>
       <div class="button-row" style="justify-content:center;">
-        <button id="download-json-btn" type="button">응답 JSON 다운로드</button>
+        <button id="download-json-btn" type="button">Download Response JSON</button>
       </div>
     </section>
   </div>
