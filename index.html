@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>한국어 음성 지각 실험</title>
+  <title>Korean Speech Perception Experiment</title>
   <style>
     :root {
       --bg: #f7f7fb;
@@ -149,59 +149,59 @@
 <body>
   <div class="container">
     <section id="welcome-screen" class="card">
-      <h1>한국어 음성 지각 실험</h1>
-      <p>안녕하세요. 본 실험은 한국어 음성 지각 방식을 살펴보기 위한 연구입니다.</p>
-      <p>실험은 다음 순서로 진행됩니다.</p>
+      <h1>Korean Speech Perception Experiment</h1>
+      <p>Hello. This experiment investigates how Korean speech sounds are perceived.</p>
+      <p>The experiment will proceed in the following order:</p>
       <ol>
-        <li>연구 설명 및 동의 (Consent)</li>
-        <li>참가자 정보 입력 (Participant Information)</li>
-        <li>한국어 학습 배경 입력 (Korean Learning Background)</li>
-        <li>연습</li>
+        <li>Consent</li>
+        <li>Participant Information)</li>
+        <li>Korean Learning Background</li>
+        <li>Practice</li>
         <li>Pre-test</li>
         <li>Training</li>
         <li>Post-test</li>
-        <li>사후 설문</li>
+        <li>Post-experiment Survey</li>
       </ol>
-      <p class="small">조용한 환경에서 이어폰 또는 헤드폰을 착용하고 참여해 주세요.</p>
+      <p class="small">Please participate in a quiet environment using earphones or headphones.</p>
       <div class="button-row">
-        <button id="go-consent-btn" type="button">다음</button>
+        <button id="go-consent-btn" type="button">Next</button>
       </div>
     </section>
 
     <section id="consent-screen" class="card hidden">
-      <h2>연구 참여 동의</h2>
-      <p>본 실험은 익명으로 진행되며, 응답은 연구 목적으로만 사용됩니다.</p>
-      <p>원하지 않으시면 언제든 중단할 수 있습니다.</p>
+      <h2>Consent</h2>
+      <p>This experiment is conducted anonymously, and all responses will be used for research purposes only.</p>
+      <p>You may stop participating at any time if you wish.</p>
       <label>
         <input type="checkbox" id="consent-check" />
-        위 내용을 읽었으며 연구 참여에 동의합니다.
+        I have read the above information and agree to participate.
       </label>
       <div class="button-row">
-        <button id="back-to-welcome-btn" type="button">이전</button>
-        <button id="go-info-btn" type="button" disabled>다음</button>
+        <button id="back-to-welcome-btn" type="button">Back</button>
+        <button id="go-info-btn" type="button" disabled>Next</button>
       </div>
     </section>
 
     <section id="info-screen" class="card hidden">
-      <h2>참가자 정보</h2>
-      <p class="small">참가자 번호는 연구자가 자동으로 부여합니다.</p>
+      <h2>Participant Information</h2>
+      <p class="small">Participant ID will be assigned automatically.</p>
       <div class="question-block">
-        <label>나이
+        <label>Age
           <input type="number" id="participant-age" min="0" />
         </label>
       </div>
       <div class="question-block">
-        <label>생물학적 성별
+        <label>Biological Sex
           <select id="participant-gender">
-            <option value="">선택하세요</option>
-            <option value="female">여성</option>
-            <option value="male">남성</option>
+            <option value="">Select</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
           </select>
         </label>
       </div>
       <div class="question-block">
-        <label>출신 국가
-          <input type="text" id="participant-country" placeholder="예: 미국, 영국, 캐나다" />
+        <label>Counry of Origin
+          <input type="text" id="participant-country" placeholder="e.g., USA, UK, Canada" />
         </label>
       </div>
       <div class="button-row">
@@ -211,39 +211,39 @@
     </section>
 
     <section id="language-bg-screen" class="card hidden">
-      <h2>한국어 학습 배경</h2>
+      <h2>Korean Learning Background</h2>
       <div class="question-block">
-        <label>한국어 학습 수준
+        <label>Self-Assessed Korean Proficiency Level
           <select id="participant-level">
-            <option value="">선택하세요</option>
-            <option value="beginner">초급</option>
-            <option value="intermediate">중급</option>
-            <option value="advanced">고급</option>
+            <option value="">Select</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
           </select>
         </label>
       </div>
       <div class="question-block">
-        <label>한국어 학습 기간</label>
+        <label>Length of Korean Study</label>
         <div class="inline-two">
-          <input type="number" id="learning-years" min="0" placeholder="년" />
-          <input type="number" id="learning-months" min="0" max="11" placeholder="개월" />
+          <input type="number" id="learning-years" min="0" placeholder="Years" />
+          <input type="number" id="learning-months" min="0" max="11" placeholder="Months" />
         </div>
       </div>
       <div class="question-block">
-        <label>한국 거주 기간</label>
+        <label>Length of Residence in Korea</label>
         <div class="inline-two">
-          <input type="number" id="residence-years" min="0" placeholder="년" />
-          <input type="number" id="residence-months" min="0" max="11" placeholder="개월" />
+          <input type="number" id="residence-years" min="0" placeholder="Years" />
+          <input type="number" id="residence-months" min="0" max="11" placeholder="Months" />
         </div>
       </div>
       <div class="button-row">
-        <button id="back-to-info-btn" type="button">이전</button>
-        <button id="go-practice-btn" type="button">연습으로 이동</button>
+        <button id="back-to-info-btn" type="button">Back</button>
+        <button id="go-practice-btn" type="button">Go to Practice</button>
       </div>
     </section>
 
     <section id="practice-intro-screen" class="card hidden">
-      <h2>연습</h2>
+      <h2>Practice</h2>
       <p>먼저 연습 문항을 진행합니다.</p>
       <p>소리를 들은 뒤, 들린 것에 더 가깝다고 생각하는 항목을 선택해 주세요.</p>
       <p>너무 오래 고민하지 말고, 가장 먼저 들린 느낌에 따라 직관적으로 선택해 주세요.</p>
